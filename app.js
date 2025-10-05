@@ -637,6 +637,16 @@ function displayResults(results, book, chapter, targetVerse) {
     });
     const sortedVerseNumbers = Array.from(allVerseNumbers).sort((a, b) => a - b);
 
+    // Update verse input max to match actual number of verses
+    const maxVerse = sortedVerseNumbers.length > 0 ?
+        Math.max(...sortedVerseNumbers) : 999;
+    verseInput.max = maxVerse;
+
+    // Clamp current verse value if it exceeds max
+    if (parseInt(verseInput.value) > maxVerse) {
+        verseInput.value = maxVerse;
+    }
+
     // Create a container for synchronized scrolling
     const scrollContainer = document.createElement('div');
     scrollContainer.className = 'verses-scroll-container';
