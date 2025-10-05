@@ -465,8 +465,14 @@ function updateVerseHighlight(targetVerse) {
     const newHighlight = document.querySelector(`[data-verse="${targetVerse}"]`);
     if (newHighlight) {
         newHighlight.classList.add('verse-row-highlight');
-        // Scroll more slowly to new verse - no auto scroll, let CSS handle it
-        // User can see the transition better this way
+        // Scroll to new verse with smooth animation
+        setTimeout(() => {
+            newHighlight.scrollIntoView({
+                block: 'center',
+                behavior: 'smooth',
+                inline: 'nearest'
+            });
+        }, 100);
     }
 }
 
