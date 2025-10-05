@@ -508,15 +508,12 @@ async function compareBibles() {
         return;
     }
 
-    // Show loading with smooth fade out
+    // Show loading immediately
     resultsDiv.style.opacity = '0';
     resultsDiv.style.transform = 'translateY(-10px)';
-
-    setTimeout(() => {
-        resultsDiv.innerHTML = '';
-        loadingDiv.style.display = 'block';
-        loadingDiv.style.opacity = '1';
-    }, 200);
+    resultsDiv.innerHTML = '';
+    loadingDiv.style.display = 'block';
+    loadingDiv.style.opacity = '1';
 
     // Fetch chapter data for all translations
     const promises = selectedTranslations.map(translation =>
