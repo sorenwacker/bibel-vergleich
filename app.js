@@ -664,6 +664,15 @@ function displayResults(results, book, chapter, targetVerse) {
             verseInput.value = verseNum;
             saveState();
             updateVerseHighlight(verseNum);
+
+            // Center the clicked verse
+            setTimeout(() => {
+                row.scrollIntoView({
+                    block: 'center',
+                    behavior: 'smooth',
+                    inline: 'nearest'
+                });
+            }, 50);
         });
 
         // Add hover cursor
