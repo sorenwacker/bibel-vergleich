@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --primary: #6366f1;
     --primary-dark: #4f46e5;
@@ -281,6 +285,7 @@ h1 {
 .verses-scroll-container {
     flex: 1;
     overflow: visible;
+    scroll-behavior: smooth;
 }
 
 .verse-row {

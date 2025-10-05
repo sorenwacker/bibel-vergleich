@@ -618,13 +618,18 @@ function displayResults(results, book, chapter, targetVerse) {
     resultsDiv.appendChild(headerRow);
     resultsDiv.appendChild(scrollContainer);
 
-    // Scroll to highlighted verse
+    // Scroll to highlighted verse with slower, custom smooth scroll
     setTimeout(() => {
         const highlightedRow = scrollContainer.querySelector('.verse-row-highlight');
         if (highlightedRow) {
-            highlightedRow.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            // Use smooth scroll with custom timing
+            highlightedRow.scrollIntoView({
+                block: 'center',
+                behavior: 'smooth',
+                inline: 'nearest'
+            });
         }
-    }, 100);
+    }, 450);
 }
 
 function showNotification(message, type = 'info') {
