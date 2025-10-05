@@ -330,21 +330,14 @@ const hadSavedState = loadSavedState();
 // Initialize chapter max on load (after state is loaded)
 updateChapterMax();
 
-// Auto-load comparison if we had saved state
-if (hadSavedState) {
-    // Wait for page to fully load before making API calls
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                compareBibles();
-            }, 200);
-        });
-    } else {
-        setTimeout(() => {
-            compareBibles();
-        }, 200);
-    }
-}
+// Auto-load comparison if we had saved state OR always load default
+// Always load on startup to avoid empty state
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        console.log('Auto-loading Bible comparison on startup...');
+        compareBibles();
+    }, 300);
+});
 
 // Register Service Worker for offline support
 if ('serviceWorker' in navigator) {
