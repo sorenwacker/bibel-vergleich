@@ -1,0 +1,68 @@
+{
+  "name": "bibel-vergleich",
+  "version": "1.0.0",
+  "description": "Desktop-App zum Vergleichen deutscher Bibelübersetzungen",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "node server.js",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux",
+    "build:all": "electron-builder -mwl"
+  },
+  "keywords": [
+    "bible",
+    "german",
+    "comparison",
+    "electron"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "electron-rebuild": "^3.2.9"
+  },
+  "build": {
+    "appId": "com.bibelvergleich.app",
+    "productName": "Bibel Vergleich",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "index.html",
+      "app.js",
+      "styles.css",
+      "sw.js",
+      "electron-main.js",
+      "assets/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.reference",
+      "icon": "assets/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility"
+    }
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1"
+  }
+}

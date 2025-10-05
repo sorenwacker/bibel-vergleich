@@ -1,0 +1,14 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="#2d2d30"/>
+  <rect x="100" y="80" width="312" height="400" fill="#3c3c3c" rx="10"/>
+  <rect x="100" y="80" width="312" height="60" fill="#007acc"/>
+  <text x="256" y="130" font-family="Arial, sans-serif" font-size="36" fill="white" text-anchor="middle" font-weight="bold">BIBEL</text>
+  <line x1="130" y1="200" x2="382" y2="200" stroke="#007acc" stroke-width="3"/>
+  <line x1="130" y1="250" x2="382" y2="250" stroke="#666" stroke-width="2"/>
+  <line x1="130" y1="280" x2="350" y2="280" stroke="#666" stroke-width="2"/>
+  <line x1="130" y1="310" x2="370" y2="310" stroke="#666" stroke-width="2"/>
+  <line x1="130" y1="340" x2="340" y2="340" stroke="#666" stroke-width="2"/>
+  <line x1="130" y1="380" x2="382" y2="380" stroke="#007acc" stroke-width="3"/>
+  <line x1="130" y1="410" x2="360" y2="410" stroke="#666" stroke-width="2"/>
+  <line x1="130" y1="440" x2="370" y2="440" stroke="#666" stroke-width="2"/>
+</svg>

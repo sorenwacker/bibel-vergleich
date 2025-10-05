@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>Bolls API Test</h1>
+    <div id="output"></div>
+
+    <script>
+        async function testAPI() {
+            const output = document.getElementById('output');
+
+            try {
+                // Test 1: LUT with John
+                output.innerHTML += '<h2>Test 1: LUT/John/3</h2>';
+                const url1 = 'https://bolls.life/get-text/LUT/John/3/';
+                console.log('Fetching:', url1);
+                const response1 = await fetch(url1);
+                const data1 = await response1.json();
+                const verse16 = data1.find(v => v.verse === 16);
+                output.innerHTML += `<p>Verse 16: ${verse16 ? verse16.text : 'NOT FOUND'}</p>`;
+
+                // Test 2: All translations
+                const translations = ['LUT', 'ELB', 'SCH', 'S00', 'MB', 'HFA'];
+                for (const trans of translations) {
+                    const url = `https://bolls.life/get-text/${trans}/John/3/`;
+                    console.log('Fetching:', url);
+                    try {
+                        const response = await fetch(url);
+                        if (response.ok) {
+                            const data = await response.json();
+                            const verse = data.find(v => v.verse === 16);
+                            output.innerHTML += `<p><strong>${trans}:</strong> ${verse ? verse.text : 'NOT FOUND'}</p>`;
+                        } else {
+                            output.innerHTML += `<p><strong>${trans}:</strong> HTTP ${response.status}</p>`;
+                        }
+                    } catch (error) {
+                        output.innerHTML += `<p><strong>${trans}:</strong> ERROR - ${error.message}</p>`;
+                    }
+                }
+
+            } catch (error) {
+                output.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+                console.error('Error:', error);
+            }
+        }
+
+        testAPI();
+    </script>
+</body>
+</html>
