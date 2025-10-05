@@ -426,12 +426,17 @@ async function compareBibles() {
         return;
     }
 
-    // Show loading with fade out
+    // Show loading with smooth fade out
     resultsDiv.style.opacity = '0';
+    resultsDiv.style.transform = 'translateY(-10px)';
     setTimeout(() => {
         resultsDiv.innerHTML = '';
         loadingDiv.style.display = 'block';
-    }, 150);
+        loadingDiv.style.opacity = '0';
+        setTimeout(() => {
+            loadingDiv.style.opacity = '1';
+        }, 10);
+    }, 200);
 
     // Fetch chapter data for all translations
     const promises = selectedTranslations.map(translation =>
@@ -440,17 +445,25 @@ async function compareBibles() {
 
     try {
         const results = await Promise.all(promises);
-        loadingDiv.style.display = 'none';
-        displayResults(results, book, chapter, targetVerse);
-        // Fade in new content
+        loadingDiv.style.opacity = '0';
         setTimeout(() => {
-            resultsDiv.style.opacity = '1';
-        }, 50);
+            loadingDiv.style.display = 'none';
+            displayResults(results, book, chapter, targetVerse);
+            // Fade in new content with slide up
+            setTimeout(() => {
+                resultsDiv.style.opacity = '1';
+                resultsDiv.style.transform = 'translateY(0)';
+            }, 10);
+        }, 150);
     } catch (error) {
         console.error('Fehler beim Abrufen der Bibeltexte:', error);
-        loadingDiv.style.display = 'none';
-        resultsDiv.innerHTML = '<div class="translation-card error"><h3>Fehler</h3><p>Beim Laden der Bibeltexte ist ein Fehler aufgetreten.</p></div>';
-        resultsDiv.style.opacity = '1';
+        loadingDiv.style.opacity = '0';
+        setTimeout(() => {
+            loadingDiv.style.display = 'none';
+            resultsDiv.innerHTML = '<div class="translation-card error"><h3>Fehler</h3><p>Beim Laden der Bibeltexte ist ein Fehler aufgetreten.</p></div>';
+            resultsDiv.style.opacity = '1';
+            resultsDiv.style.transform = 'translateY(0)';
+        }, 150);
     }
 }
 
@@ -660,4 +673,5 @@ function showNotification(message, type = 'info') {
 }
 
 // Add smooth transitions to results container
-resultsDiv.style.transition = 'opacity 0.3s ease';
+resultsDiv.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+loadingDiv.style.transition = 'opacity 0.2s ease';
