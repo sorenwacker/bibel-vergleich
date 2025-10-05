@@ -378,7 +378,10 @@ document.addEventListener('keydown', (e) => {
         const lastVerseInChapter = verseRows.length > 0 ?
             parseInt(verseRows[verseRows.length - 1].dataset.verse) : 999;
 
-        if (currentVerse < lastVerseInChapter) {
+        // Check if the next verse exists in current chapter
+        const nextVerseExists = document.querySelector(`[data-verse="${currentVerse + 1}"]`);
+
+        if (nextVerseExists) {
             verseInput.value = currentVerse + 1;
             saveState();
             navigateToVerse();
