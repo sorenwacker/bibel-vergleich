@@ -172,6 +172,18 @@ chapterInput.addEventListener('input', () => {
     }
 });
 
+// Validate verse input against max
+verseInput.addEventListener('input', () => {
+    const maxVerse = parseInt(verseInput.max) || 999;
+    const currentVerse = parseInt(verseInput.value);
+    if (currentVerse > maxVerse) {
+        verseInput.value = maxVerse;
+    }
+    if (currentVerse < 1) {
+        verseInput.value = 1;
+    }
+});
+
 function updateChapterMax() {
     const book = bookSelect.value;
     const maxChapters = bibleStructure[book] || 150;
@@ -359,7 +371,7 @@ document.addEventListener('keydown', (e) => {
         if (currentVerse > 1) {
             verseInput.value = currentVerse - 1;
             saveState();
-            navigateToVerse();
+            updateVerseHighlight(currentVerse - 1);
         } else if (currentChapter > 1) {
             // At verse 1, go to previous chapter
             chapterInput.value = currentChapter - 1;
@@ -373,18 +385,14 @@ document.addEventListener('keydown', (e) => {
         const currentChapter = parseInt(chapterInput.value);
         const maxChapters = bibleStructure[bookSelect.value] || 150;
 
-        // Check if we're at the last verse of current chapter
-        const verseRows = document.querySelectorAll('.verse-row');
-        const lastVerseInChapter = verseRows.length > 0 ?
-            parseInt(verseRows[verseRows.length - 1].dataset.verse) : 999;
-
         // Check if the next verse exists in current chapter
         const nextVerseExists = document.querySelector(`[data-verse="${currentVerse + 1}"]`);
 
         if (nextVerseExists) {
+            // Next verse exists, just navigate to it
             verseInput.value = currentVerse + 1;
             saveState();
-            navigateToVerse();
+            updateVerseHighlight(currentVerse + 1);
         } else if (currentChapter < maxChapters) {
             // At last verse, go to next chapter
             chapterInput.value = currentChapter + 1;
@@ -457,14 +465,8 @@ function updateVerseHighlight(targetVerse) {
     const newHighlight = document.querySelector(`[data-verse="${targetVerse}"]`);
     if (newHighlight) {
         newHighlight.classList.add('verse-row-highlight');
-        // Scroll smoothly to new verse
-        setTimeout(() => {
-            newHighlight.scrollIntoView({
-                block: 'center',
-                behavior: 'smooth',
-                inline: 'nearest'
-            });
-        }, 50);
+        // Scroll more slowly to new verse - no auto scroll, let CSS handle it
+        // User can see the transition better this way
     }
 }
 
