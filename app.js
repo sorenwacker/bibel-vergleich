@@ -525,22 +525,23 @@ async function compareBibles() {
 
     try {
         const results = await Promise.all(promises);
+        console.log('Fetched results:', results);
 
-        // Hide loading immediately
+        // Hide loading
         loadingDiv.style.display = 'none';
 
         // Display results
         displayResults(results, book, chapter, targetVerse);
 
-        // Fade in new content with slide up
-        setTimeout(() => {
+        // Fade in new content
+        requestAnimationFrame(() => {
             resultsDiv.style.opacity = '1';
             resultsDiv.style.transform = 'translateY(0)';
-        }, 10);
+        });
     } catch (error) {
         console.error('Fehler beim Abrufen der Bibeltexte:', error);
 
-        // Hide loading immediately
+        // Hide loading
         loadingDiv.style.display = 'none';
 
         // Show error
@@ -636,6 +637,7 @@ async function fetchChapterData(book, chapter, translation) {
 }
 
 function displayResults(results, book, chapter, targetVerse) {
+    console.log('displayResults called with:', { book, chapter, targetVerse, resultsCount: results.length });
     resultsDiv.innerHTML = '';
 
     // Get all unique verse numbers across all translations
