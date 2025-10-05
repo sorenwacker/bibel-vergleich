@@ -354,17 +354,41 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') {
         e.preventDefault();
         const currentVerse = parseInt(verseInput.value);
+        const currentChapter = parseInt(chapterInput.value);
+
         if (currentVerse > 1) {
             verseInput.value = currentVerse - 1;
             saveState();
             navigateToVerse();
+        } else if (currentChapter > 1) {
+            // At verse 1, go to previous chapter
+            chapterInput.value = currentChapter - 1;
+            verseInput.value = 999; // Will be clamped to last verse
+            saveState();
+            compareBibles();
         }
     } else if (e.key === 'ArrowDown') {
         e.preventDefault();
         const currentVerse = parseInt(verseInput.value);
-        verseInput.value = currentVerse + 1;
-        saveState();
-        navigateToVerse();
+        const currentChapter = parseInt(chapterInput.value);
+        const maxChapters = bibleStructure[bookSelect.value] || 150;
+
+        // Check if we're at the last verse of current chapter
+        const verseRows = document.querySelectorAll('.verse-row');
+        const lastVerseInChapter = verseRows.length > 0 ?
+            parseInt(verseRows[verseRows.length - 1].dataset.verse) : 999;
+
+        if (currentVerse < lastVerseInChapter) {
+            verseInput.value = currentVerse + 1;
+            saveState();
+            navigateToVerse();
+        } else if (currentChapter < maxChapters) {
+            // At last verse, go to next chapter
+            chapterInput.value = currentChapter + 1;
+            verseInput.value = 1;
+            saveState();
+            compareBibles();
+        }
     }
 
     // Arrow Left/Right - navigate chapters
