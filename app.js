@@ -332,10 +332,18 @@ updateChapterMax();
 
 // Auto-load comparison if we had saved state
 if (hadSavedState) {
-    // Small delay to ensure DOM is ready
-    setTimeout(() => {
-        compareBibles();
-    }, 100);
+    // Wait for page to fully load before making API calls
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                compareBibles();
+            }, 200);
+        });
+    } else {
+        setTimeout(() => {
+            compareBibles();
+        }, 200);
+    }
 }
 
 // Register Service Worker for offline support
