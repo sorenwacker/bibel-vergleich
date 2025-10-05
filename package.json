@@ -61,8 +61,5 @@
       ],
       "category": "Utility"
     }
-  },
-  "dependencies": {
-    "better-sqlite3": "^12.4.1"
   }
 }
