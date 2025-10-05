@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://bolls.life; img-src 'self' data:;">
+    <meta name="description" content="Vergleichen Sie deutsche Bibelübersetzungen parallel - Luther, Elberfelder, Schlachter, Menge und mehr">
+    <meta name="theme-color" content="#2d2d30">
+    <title>Bibel Vergleich - Deutsche Übersetzungen</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bibel Vergleich</h1>
+            <p class="subtitle">Deutsche Bibelübersetzungen parallel vergleichen</p>
+        </header>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="book">Buch:</label>
+                <select id="book">
+                    <optgroup label="Altes Testament">
+                        <option value="1.Mose">1. Mose (Genesis)</option>
+                        <option value="2.Mose">2. Mose (Exodus)</option>
+                        <option value="3.Mose">3. Mose (Levitikus)</option>
+                        <option value="4.Mose">4. Mose (Numeri)</option>
+                        <option value="5.Mose">5. Mose (Deuteronomium)</option>
+                        <option value="Josua">Josua</option>
+                        <option value="Richter">Richter</option>
+                        <option value="Rut">Rut</option>
+                        <option value="1.Samuel">1. Samuel</option>
+                        <option value="2.Samuel">2. Samuel</option>
+                        <option value="1 Koenige">1. Könige</option>
+                        <option value="2 Koenige">2. Könige</option>
+                        <option value="1.Chronik">1. Chronik</option>
+                        <option value="2.Chronik">2. Chronik</option>
+                        <option value="Esra">Esra</option>
+                        <option value="Nehemia">Nehemia</option>
+                        <option value="Ester">Ester</option>
+                        <option value="Job">Hiob</option>
+                        <option value="Psalm">Psalm</option>
+                        <option value="Sprueche">Sprüche</option>
+                        <option value="Prediger">Prediger</option>
+                        <option value="Hohelied">Hohelied</option>
+                        <option value="Jesaja">Jesaja</option>
+                        <option value="Jeremia">Jeremia</option>
+                        <option value="Klagelieder">Klagelieder</option>
+                        <option value="Hesekiel">Hesekiel</option>
+                        <option value="Daniel">Daniel</option>
+                        <option value="Hosea">Hosea</option>
+                        <option value="Joel">Joel</option>
+                        <option value="Amos">Amos</option>
+                        <option value="Obadja">Obadja</option>
+                        <option value="Jona">Jona</option>
+                        <option value="Mica">Micha</option>
+                        <option value="Nahum">Nahum</option>
+                        <option value="Habakuk">Habakuk</option>
+                        <option value="Zephanja">Zephanja</option>
+                        <option value="Haggai">Haggai</option>
+                        <option value="Sacharja">Sacharja</option>
+                        <option value="Maleachi">Maleachi</option>
+                    </optgroup>
+                    <optgroup label="Neues Testament">
+                        <option value="Matthaeus">Matthäus</option>
+                        <option value="Markus">Markus</option>
+                        <option value="Lukas">Lukas</option>
+                        <option value="Johannes" selected>Johannes</option>
+                        <option value="Apostelgeschichte">Apostelgeschichte</option>
+                        <option value="Roemers">Römer</option>
+                        <option value="1.Korinther">1. Korinther</option>
+                        <option value="2.Korinther">2. Korinther</option>
+                        <option value="Galater">Galater</option>
+                        <option value="Epheser">Epheser</option>
+                        <option value="Philipper">Philipper</option>
+                        <option value="Kolosser">Kolosser</option>
+                        <option value="1.Thessalonicher">1. Thessalonicher</option>
+                        <option value="2.Thessalonicher">2. Thessalonicher</option>
+                        <option value="1.Timotheus">1. Timotheus</option>
+                        <option value="2.Timotheus">2. Timotheus</option>
+                        <option value="Titus">Titus</option>
+                        <option value="Philemon">Philemon</option>
+                        <option value="Hebraeer">Hebräer</option>
+                        <option value="Jakobus">Jakobus</option>
+                        <option value="1.Petrus">1. Petrus</option>
+                        <option value="2.Petrus">2. Petrus</option>
+                        <option value="1.Johannes">1. Johannes</option>
+                        <option value="2.Johannes">2. Johannes</option>
+                        <option value="3.Johannes">3. Johannes</option>
+                        <option value="Judas">Judas</option>
+                        <option value="Offenbarung">Offenbarung</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="chapter">Kapitel:</label>
+                <input type="number" id="chapter" min="1" value="3">
+            </div>
+
+            <div class="input-group">
+                <label for="verse">Vers:</label>
+                <input type="number" id="verse" min="1" value="16">
+            </div>
+
+            <button id="compareBtn" class="btn-primary">Vergleichen</button>
+
+            <div class="spacer"></div>
+
+            <div class="input-group">
+                <button id="prevChapterBtn" class="btn-nav" title="Vorheriges Kapitel (←)">◄ Kapitel</button>
+                <button id="nextChapterBtn" class="btn-nav" title="Nächstes Kapitel (→)">Kapitel ►</button>
+            </div>
+
+            <div class="input-group">
+                <button id="prevVerseBtn" class="btn-nav" title="Vorheriger Vers (↑)">▲ Vers</button>
+                <button id="nextVerseBtn" class="btn-nav" title="Nächster Vers (↓)">Vers ▼</button>
+            </div>
+        </div>
+
+        <div class="translation-selector">
+            <h3>Übersetzungen auswählen:</h3>
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" value="LUT" checked> Luther 1912
+                </label>
+                <label>
+                    <input type="checkbox" value="ELB" checked> Elberfelder 1871
+                </label>
+                <label>
+                    <input type="checkbox" value="SCH" checked> Schlachter 1951
+                </label>
+                <label>
+                    <input type="checkbox" value="S00"> Schlachter 2000
+                </label>
+                <label>
+                    <input type="checkbox" value="MB"> Menge-Bibel
+                </label>
+                <label>
+                    <input type="checkbox" value="HFA"> Hoffnung für Alle
+                </label>
+            </div>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Lade Bibeltexte...</p>
+        </div>
+
+        <div id="results" class="results"></div>
+
+        <footer>
+            <p>Lokale Bibel-Datenbank • Bibel Vergleich v1.0.0</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
