@@ -644,6 +644,16 @@ function displayResults(results, book, chapter, targetVerse) {
         row.className = verseNum === targetVerse ? 'verse-row verse-row-highlight' : 'verse-row';
         row.dataset.verse = verseNum;
 
+        // Add click handler to make verse active
+        row.addEventListener('click', () => {
+            verseInput.value = verseNum;
+            saveState();
+            updateVerseHighlight(verseNum);
+        });
+
+        // Add hover cursor
+        row.style.cursor = 'pointer';
+
         results.forEach((result) => {
             const cell = document.createElement('div');
             cell.className = 'verse-cell';
