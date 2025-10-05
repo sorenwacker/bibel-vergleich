@@ -285,7 +285,7 @@ h1 {
 
 .verse-row {
     display: flex;
-    transition: background 0.1s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
     min-width: min-content;
 }
 
@@ -295,6 +295,7 @@ h1 {
 
 .verse-row-highlight {
     background: #094771;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .verse-row-highlight:hover {

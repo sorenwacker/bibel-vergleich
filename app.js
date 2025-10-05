@@ -426,9 +426,12 @@ async function compareBibles() {
         return;
     }
 
-    // Show loading
-    resultsDiv.innerHTML = '';
-    loadingDiv.style.display = 'block';
+    // Show loading with fade out
+    resultsDiv.style.opacity = '0';
+    setTimeout(() => {
+        resultsDiv.innerHTML = '';
+        loadingDiv.style.display = 'block';
+    }, 150);
 
     // Fetch chapter data for all translations
     const promises = selectedTranslations.map(translation =>
@@ -439,10 +442,15 @@ async function compareBibles() {
         const results = await Promise.all(promises);
         loadingDiv.style.display = 'none';
         displayResults(results, book, chapter, targetVerse);
+        // Fade in new content
+        setTimeout(() => {
+            resultsDiv.style.opacity = '1';
+        }, 50);
     } catch (error) {
         console.error('Fehler beim Abrufen der Bibeltexte:', error);
         loadingDiv.style.display = 'none';
         resultsDiv.innerHTML = '<div class="translation-card error"><h3>Fehler</h3><p>Beim Laden der Bibeltexte ist ein Fehler aufgetreten.</p></div>';
+        resultsDiv.style.opacity = '1';
     }
 }
 
