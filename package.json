@@ -16,7 +16,7 @@
     "comparison",
     "electron"
   ],
-  "author": "",
+  "author": "Sören Wacker",
   "license": "MIT",
   "devDependencies": {
     "electron": "^38.0.0",
