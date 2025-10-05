@@ -511,13 +511,11 @@ async function compareBibles() {
     // Show loading with smooth fade out
     resultsDiv.style.opacity = '0';
     resultsDiv.style.transform = 'translateY(-10px)';
+
     setTimeout(() => {
         resultsDiv.innerHTML = '';
         loadingDiv.style.display = 'block';
-        loadingDiv.style.opacity = '0';
-        setTimeout(() => {
-            loadingDiv.style.opacity = '1';
-        }, 10);
+        loadingDiv.style.opacity = '1';
     }, 200);
 
     // Fetch chapter data for all translations
@@ -527,25 +525,28 @@ async function compareBibles() {
 
     try {
         const results = await Promise.all(promises);
-        loadingDiv.style.opacity = '0';
+
+        // Hide loading immediately
+        loadingDiv.style.display = 'none';
+
+        // Display results
+        displayResults(results, book, chapter, targetVerse);
+
+        // Fade in new content with slide up
         setTimeout(() => {
-            loadingDiv.style.display = 'none';
-            displayResults(results, book, chapter, targetVerse);
-            // Fade in new content with slide up
-            setTimeout(() => {
-                resultsDiv.style.opacity = '1';
-                resultsDiv.style.transform = 'translateY(0)';
-            }, 10);
-        }, 150);
-    } catch (error) {
-        console.error('Fehler beim Abrufen der Bibeltexte:', error);
-        loadingDiv.style.opacity = '0';
-        setTimeout(() => {
-            loadingDiv.style.display = 'none';
-            resultsDiv.innerHTML = '<div class="translation-card error"><h3>Fehler</h3><p>Beim Laden der Bibeltexte ist ein Fehler aufgetreten.</p></div>';
             resultsDiv.style.opacity = '1';
             resultsDiv.style.transform = 'translateY(0)';
-        }, 150);
+        }, 10);
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Bibeltexte:', error);
+
+        // Hide loading immediately
+        loadingDiv.style.display = 'none';
+
+        // Show error
+        resultsDiv.innerHTML = '<div class="translation-card error"><h3>Fehler</h3><p>Beim Laden der Bibeltexte ist ein Fehler aufgetreten.</p></div>';
+        resultsDiv.style.opacity = '1';
+        resultsDiv.style.transform = 'translateY(0)';
     }
 }
 
