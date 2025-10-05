@@ -339,6 +339,10 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Global state for smooth verse navigation
+let lastLoadedBook = null;
+let lastLoadedChapter = null;
+
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
     // Ignore if typing in input fields
@@ -353,14 +357,14 @@ document.addEventListener('keydown', (e) => {
         if (currentVerse > 1) {
             verseInput.value = currentVerse - 1;
             saveState();
-            compareBibles();
+            navigateToVerse();
         }
     } else if (e.key === 'ArrowDown') {
         e.preventDefault();
         const currentVerse = parseInt(verseInput.value);
         verseInput.value = currentVerse + 1;
         saveState();
-        compareBibles();
+        navigateToVerse();
     }
 
     // Arrow Left/Right - navigate chapters
@@ -399,10 +403,52 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Smart navigation - only reload if chapter changed, otherwise just scroll
+function navigateToVerse() {
+    const book = bookSelect.value;
+    const chapter = parseInt(chapterInput.value);
+    const targetVerse = parseInt(verseInput.value);
+
+    // If we're in the same chapter, just update the highlight smoothly
+    if (lastLoadedBook === book && lastLoadedChapter === chapter) {
+        updateVerseHighlight(targetVerse);
+    } else {
+        // Different chapter, need to reload
+        compareBibles();
+    }
+}
+
+// Update verse highlight without reloading
+function updateVerseHighlight(targetVerse) {
+    // Remove old highlight
+    const oldHighlight = document.querySelector('.verse-row-highlight');
+    if (oldHighlight) {
+        oldHighlight.classList.remove('verse-row-highlight');
+    }
+
+    // Add new highlight
+    const newHighlight = document.querySelector(`[data-verse="${targetVerse}"]`);
+    if (newHighlight) {
+        newHighlight.classList.add('verse-row-highlight');
+        // Scroll smoothly to new verse
+        setTimeout(() => {
+            newHighlight.scrollIntoView({
+                block: 'center',
+                behavior: 'smooth',
+                inline: 'nearest'
+            });
+        }, 50);
+    }
+}
+
 async function compareBibles() {
     const book = bookSelect.value;
     const chapter = parseInt(chapterInput.value);
     const targetVerse = parseInt(verseInput.value);
+
+    // Store current chapter for smart navigation
+    lastLoadedBook = book;
+    lastLoadedChapter = chapter;
 
     // Get selected translations
     const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked');
